@@ -14,6 +14,9 @@
 		75BC7D0724E025050054D3DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC7D0624E025050054D3DC /* Assets.xcassets */; };
 		75BC7D0A24E025050054D3DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC7D0824E025050054D3DC /* LaunchScreen.storyboard */; };
 		75BC7D0D24E025050054D3DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D0C24E025050054D3DC /* main.m */; };
+		75BC7D1824E0258C0054D3DC /* FilterBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D1424E0258C0054D3DC /* FilterBarCell.m */; };
+		75BC7D1924E0258C0054D3DC /* FilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D1524E0258C0054D3DC /* FilterBar.m */; };
+		C727818D28FF6A00C6D30CA7 /* Pods_FilterOfSplitScreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA9B6CED50FC09EEB6CCDEB /* Pods_FilterOfSplitScreen.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,13 @@
 		75BC7D0924E025050054D3DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		75BC7D0B24E025050054D3DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75BC7D0C24E025050054D3DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		75BC7D1424E0258C0054D3DC /* FilterBarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBarCell.m; sourceTree = "<group>"; };
+		75BC7D1524E0258C0054D3DC /* FilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBar.m; sourceTree = "<group>"; };
+		75BC7D1624E0258C0054D3DC /* FilterBarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBarCell.h; sourceTree = "<group>"; };
+		75BC7D1724E0258C0054D3DC /* FilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBar.h; sourceTree = "<group>"; };
+		96D766E7AB31B347F7E5AA19 /* Pods-FilterOfSplitScreen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilterOfSplitScreen.release.xcconfig"; path = "Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen.release.xcconfig"; sourceTree = "<group>"; };
+		E4421F53E3DEB68DC49C1604 /* Pods-FilterOfSplitScreen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilterOfSplitScreen.debug.xcconfig"; path = "Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen.debug.xcconfig"; sourceTree = "<group>"; };
+		EFA9B6CED50FC09EEB6CCDEB /* Pods_FilterOfSplitScreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FilterOfSplitScreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,17 +46,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C727818D28FF6A00C6D30CA7 /* Pods_FilterOfSplitScreen.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67D818E9799CDC8F58E7FA5C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E4421F53E3DEB68DC49C1604 /* Pods-FilterOfSplitScreen.debug.xcconfig */,
+				96D766E7AB31B347F7E5AA19 /* Pods-FilterOfSplitScreen.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		75BC7CEE24E025000054D3DC = {
 			isa = PBXGroup;
 			children = (
 				75BC7CF924E025000054D3DC /* FilterOfSplitScreen */,
 				75BC7CF824E025000054D3DC /* Products */,
+				67D818E9799CDC8F58E7FA5C /* Pods */,
+				CCDA5B2927381BD531CBAF51 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +84,7 @@
 		75BC7CF924E025000054D3DC /* FilterOfSplitScreen */ = {
 			isa = PBXGroup;
 			children = (
+				75BC7D1324E0258C0054D3DC /* Tool */,
 				75BC7CFA24E025000054D3DC /* AppDelegate.h */,
 				75BC7CFB24E025000054D3DC /* AppDelegate.m */,
 				75BC7CFD24E025000054D3DC /* SceneDelegate.h */,
@@ -76,6 +100,25 @@
 			path = FilterOfSplitScreen;
 			sourceTree = "<group>";
 		};
+		75BC7D1324E0258C0054D3DC /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				75BC7D1424E0258C0054D3DC /* FilterBarCell.m */,
+				75BC7D1524E0258C0054D3DC /* FilterBar.m */,
+				75BC7D1624E0258C0054D3DC /* FilterBarCell.h */,
+				75BC7D1724E0258C0054D3DC /* FilterBar.h */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		CCDA5B2927381BD531CBAF51 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EFA9B6CED50FC09EEB6CCDEB /* Pods_FilterOfSplitScreen.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -83,9 +126,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75BC7D1024E025050054D3DC /* Build configuration list for PBXNativeTarget "FilterOfSplitScreen" */;
 			buildPhases = (
+				1D145A427E8D2FC91DB8111B /* [CP] Check Pods Manifest.lock */,
 				75BC7CF324E025000054D3DC /* Sources */,
 				75BC7CF424E025000054D3DC /* Frameworks */,
 				75BC7CF524E025000054D3DC /* Resources */,
+				B0DACD194B223F0911E52D1A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -141,6 +186,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1D145A427E8D2FC91DB8111B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FilterOfSplitScreen-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0DACD194B223F0911E52D1A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		75BC7CF324E025000054D3DC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -149,6 +236,8 @@
 				75BC7D0224E025000054D3DC /* ViewController.m in Sources */,
 				75BC7CFC24E025000054D3DC /* AppDelegate.m in Sources */,
 				75BC7D0D24E025050054D3DC /* main.m in Sources */,
+				75BC7D1924E0258C0054D3DC /* FilterBar.m in Sources */,
+				75BC7D1824E0258C0054D3DC /* FilterBarCell.m in Sources */,
 				75BC7CFF24E025000054D3DC /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +376,7 @@
 		};
 		75BC7D1124E025050054D3DC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4421F53E3DEB68DC49C1604 /* Pods-FilterOfSplitScreen.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -303,6 +393,7 @@
 		};
 		75BC7D1224E025050054D3DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96D766E7AB31B347F7E5AA19 /* Pods-FilterOfSplitScreen.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
