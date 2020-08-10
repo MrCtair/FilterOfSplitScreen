@@ -62,8 +62,8 @@ typedef struct {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self prepareForView];
     [self prepareForData];
+    [self prepareForView];
     [self prepareForAction];
 }
 - (void)prepareForData{
@@ -398,6 +398,16 @@ typedef struct {
     [self setupShaderProgramWithName:@"SplitScreen_4"];
 }
 
+//分屏(6屏)
+- (void)setupSplitScreen_6ShaderProgram{
+    [self setupShaderProgramWithName:@"SplitScreen_6"];
+}
+
+//分屏(9分屏)
+- (void)setupSplitScreen_9ShaderProgram{
+    [self setupShaderProgramWithName:@"SplitScreen_9"];
+}
+
 
 #pragma mark — FilterBar
 - (void)setUpFilterBar{
@@ -405,14 +415,37 @@ typedef struct {
     FilterBar *filerBar = [[FilterBar alloc] initWithFrame:CGRectMake(0, filterBarY, SCREENWIDTH, FILTERBARHEIGHT)];
     filerBar.delegate = self;
     [self.view addSubview:filerBar];
-    NSArray *dataSource = @[@"无",@"分屏_2",@"分屏_3",@"分屏_4"];
-    filerBar.itemList = dataSource;
+    filerBar.itemList = _dataSource;
 }
 
 #pragma mark - FilterBarDelegate
 
 - (void)filterBar:(FilterBar *)filterBar didScrollToIndex:(NSUInteger)index {
     //1. 选择默认shader
+    switch (index) {
+        case 0:
+            [self setupNormalShaderProgram];
+            break;
+        case 1:
+            [self setupSplitScreen_2ShaderProgram];
+            break;
+        case 2:
+            [self setupSplitScreen_3ShaderProgram];
+            break;
+        case 3:
+            [self setupSplitScreen_4ShaderProgram];
+            break;
+        case 4:
+            [self setupSplitScreen_6ShaderProgram];
+            break;
+        case 5:
+            [self setupSplitScreen_9ShaderProgram];
+            break;
+        
+            
+        default:
+            break;
+    }
     if (index == 0) {
         [self setupNormalShaderProgram];
     }else if(index == 1)
