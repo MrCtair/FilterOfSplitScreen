@@ -16,6 +16,8 @@
 		75BC7D0D24E025050054D3DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D0C24E025050054D3DC /* main.m */; };
 		75BC7D1824E0258C0054D3DC /* FilterBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D1424E0258C0054D3DC /* FilterBarCell.m */; };
 		75BC7D1924E0258C0054D3DC /* FilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D1524E0258C0054D3DC /* FilterBar.m */; };
+		75BC7D1C24E162AF0054D3DC /* SplitScreen_2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 75BC7D1B24E162AF0054D3DC /* SplitScreen_2.vsh */; };
+		75BC7D1E24E162C30054D3DC /* SplitScreen_2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 75BC7D1D24E162C30054D3DC /* SplitScreen_2.fsh */; };
 		792EF89F24E14F690092967D /* Normal.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 792EF89E24E14F690092967D /* Normal.vsh */; };
 		792EF8A124E14F9D0092967D /* Normal.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 792EF8A024E14F9D0092967D /* Normal.fsh */; };
 		C727818D28FF6A00C6D30CA7 /* Pods_FilterOfSplitScreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA9B6CED50FC09EEB6CCDEB /* Pods_FilterOfSplitScreen.framework */; };
@@ -38,6 +40,8 @@
 		75BC7D1524E0258C0054D3DC /* FilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBar.m; sourceTree = "<group>"; };
 		75BC7D1624E0258C0054D3DC /* FilterBarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBarCell.h; sourceTree = "<group>"; };
 		75BC7D1724E0258C0054D3DC /* FilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBar.h; sourceTree = "<group>"; };
+		75BC7D1B24E162AF0054D3DC /* SplitScreen_2.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen_2.vsh; sourceTree = "<group>"; };
+		75BC7D1D24E162C30054D3DC /* SplitScreen_2.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen_2.fsh; sourceTree = "<group>"; };
 		792EF89E24E14F690092967D /* Normal.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.vsh; sourceTree = "<group>"; };
 		792EF8A024E14F9D0092967D /* Normal.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.fsh; sourceTree = "<group>"; };
 		96D766E7AB31B347F7E5AA19 /* Pods-FilterOfSplitScreen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilterOfSplitScreen.release.xcconfig"; path = "Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen.release.xcconfig"; sourceTree = "<group>"; };
@@ -115,9 +119,19 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		75BC7D1A24E1629E0054D3DC /* SplitScreen_2 */ = {
+			isa = PBXGroup;
+			children = (
+				75BC7D1B24E162AF0054D3DC /* SplitScreen_2.vsh */,
+				75BC7D1D24E162C30054D3DC /* SplitScreen_2.fsh */,
+			);
+			path = SplitScreen_2;
+			sourceTree = "<group>";
+		};
 		792EF89C24E14EC70092967D /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				75BC7D1A24E1629E0054D3DC /* SplitScreen_2 */,
 				792EF89D24E14F3E0092967D /* Normal */,
 			);
 			path = Filter;
@@ -199,6 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75BC7D1E24E162C30054D3DC /* SplitScreen_2.fsh in Resources */,
+				75BC7D1C24E162AF0054D3DC /* SplitScreen_2.vsh in Resources */,
 				792EF8A124E14F9D0092967D /* Normal.fsh in Resources */,
 				75BC7D0A24E025050054D3DC /* LaunchScreen.storyboard in Resources */,
 				75BC7D0724E025050054D3DC /* Assets.xcassets in Resources */,

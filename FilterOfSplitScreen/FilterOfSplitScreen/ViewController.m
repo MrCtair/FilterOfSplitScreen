@@ -42,6 +42,24 @@ typedef struct {
 
 @implementation ViewController
 
+//释放
+- (void)dealloc {
+    //1.上下文释放
+    if ([EAGLContext currentContext] == self.context) {
+        [EAGLContext setCurrentContext:nil];
+    }
+    //顶点缓存区释放
+    if (_vertextBuffer) {
+        glDeleteBuffers(1, &_vertextBuffer);
+        _vertextBuffer = 0;
+    }
+    //顶点数组释放
+    if (_vertexs) {
+        free(_vertexs);
+        _vertexs = nil;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self prepareForView];
@@ -71,14 +89,14 @@ typedef struct {
     //顶点及纹理数据填入
     self.vertexs[0] = (SenceVertex){{-1, 1, 0}, {0, 1}};
     self.vertexs[1] = (SenceVertex){{-1, -1, 0}, {0, 0}};
-    self.vertexs[2] = (SenceVertex){{1, -1, 0}, {1, 0}};
-    self.vertexs[3] = (SenceVertex){{1, 1, 0}, {1, 1}};
+    self.vertexs[2] = (SenceVertex){{1, 1, 0}, {1, 1}};
+    self.vertexs[3] = (SenceVertex){{1, -1, 0}, {1, 0}};
     
     //创建Layer
     CAEAGLLayer * layer = [[CAEAGLLayer alloc] init];
     
     //设置图层Frame
-    layer.frame = CGRectMake(0, RECTSTATUS.size.height + 44, SCREENWIDTH, SCREENHEIGHT - BOTTOM_SAFE_HEIGHT - FILTERBARHEIGHT - RECTSTATUS.size.height - 44);
+    layer.frame = CGRectMake(0, RECTSTATUS.size.height, SCREENWIDTH, SCREENHEIGHT - BOTTOM_SAFE_HEIGHT - FILTERBARHEIGHT - 44);
     
     layer.contentsScale = [[UIScreen mainScreen] scale];
     
@@ -383,16 +401,12 @@ typedef struct {
 
 #pragma mark — FilterBar
 - (void)setUpFilterBar{
-    FilterBar * filterBar = [[FilterBar alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, FILTERBARHEIGHT)];
-    filterBar.delegate = self;
-    
-    [self.view addSubview:filterBar];
-    [filterBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@(FILTERBARHEIGHT));
-        make.bottom.equalTo(self.view).with.offset(-BOTTOM_SAFE_HEIGHT);
-    }];
-    filterBar.itemList = _dataSource;
+    CGFloat filterBarY = SCREENHEIGHT -  FILTERBARHEIGHT - BOTTOM_SAFE_HEIGHT;
+    FilterBar *filerBar = [[FilterBar alloc] initWithFrame:CGRectMake(0, filterBarY, SCREENWIDTH, FILTERBARHEIGHT)];
+    filerBar.delegate = self;
+    [self.view addSubview:filerBar];
+    NSArray *dataSource = @[@"无",@"分屏_2",@"分屏_3",@"分屏_4"];
+    filerBar.itemList = dataSource;
 }
 
 #pragma mark - FilterBarDelegate
