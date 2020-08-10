@@ -56,6 +56,7 @@ typedef struct {
     self.view.backgroundColor = [UIColor blackColor];
     [self setUpFilterBar];
     [self filterInit];
+    [self startFilerAnimation];
 }
 - (void)prepareForAction{
     
@@ -89,7 +90,7 @@ typedef struct {
     NSString * imagePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"liqin.png"];
     
     //读取图片
-    UIImage * image = [UIImage imageWithContentsOfFile:imagePath];
+    UIImage * image = [UIImage imageNamed:@"liqin"];
     // 将图片转换成纹理图片
     GLuint textureID = [self creatTextureWithImage:image];
     
@@ -98,6 +99,19 @@ typedef struct {
     
     // 设置视口
     glViewport(0, 0, self.drawableWidth, self.drawableHeight);
+    
+    // 设置顶点缓冲区
+    GLuint vertexBuffer;
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    GLsizeiptr bufferSizeiptr = sizeof(SenceVertex) * 4;
+    glBufferData(GL_ARRAY_BUFFER, bufferSizeiptr, self.vertexs, GL_STATIC_DRAW);
+    
+    // 设置默认着色器
+    [self setupNormalShaderProgram];
+    
+    // 将顶点缓存保存，退出时才释放
+    self.vertextBuffer = vertexBuffer;
 }
 
 //绑定渲染缓冲区
@@ -114,8 +128,11 @@ typedef struct {
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderBuffer);
+
 }
 
+/// 从图片中加载纹理
+/// @param image 图片
 - (GLuint)creatTextureWithImage:(UIImage *)image{
     //将图片转换成CGImageRef
     CGImageRef imageRef = [image CGImage];
@@ -197,23 +214,206 @@ typedef struct {
     return textureID;
 }
 
+#pragma mark -- 初始化着色器程序
+// 初始化着色器程序
+- (void)setupShaderProgramWithName:(NSString *)name {
+    //获取着色器program
+    GLuint program = [self programWithShaderName:name];
+    
+    //使用program
+    glUseProgram(program);
+    
+    //获取Position,Texture,TextureCoords 的索引位置
+    GLuint positionSlot = glGetAttribLocation(program, "Position");
+    GLuint textureSlot = glGetUniformLocation(program, "Texture");
+    GLuint textureCoordsSlot = glGetAttribLocation(program, "TextureCoords");
+    
+    //激活纹理 绑定纹理ID
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, self.textureID);
+    
+    //纹理sample
+    glUniform1i(textureSlot, 0);
+    
+    //打开positionSlot 属性并且传递数据到positionSlot中(顶点坐标)
+    glEnableVertexAttribArray(positionSlot);
+    glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(SenceVertex), NULL + offsetof(SenceVertex, positionCoord));
+    
+    //打开textureCoordsSlot 属性并传递数据到textureCoordsSlot(纹理坐标)
+    glEnableVertexAttribArray(textureCoordsSlot);
+    glVertexAttribPointer(textureCoordsSlot, 2, GL_FLOAT, GL_FALSE, sizeof(SenceVertex), NULL + offsetof(SenceVertex, textureCoord));
+    
+    //保存program
+    self.program = program;
+}
+
+- (GLuint)programWithShaderName:(NSString *)shaderName {
+    // 编译顶点着色器，偏远着色器
+    GLuint vertexShader = [self compileShaderWithName:shaderName type:GL_VERTEX_SHADER];
+    GLuint fragShader = [self compileShaderWithName:shaderName type:GL_FRAGMENT_SHADER];
+    
+    //将顶点/偏远附着到program
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragShader);
+    
+    //Link
+    glLinkProgram(program);
+    
+    //检查是否link成功
+    GLint linkSuccess;
+    glGetProgramiv(program, GL_LINK_STATUS, &linkSuccess);
+    if (linkSuccess == GL_FALSE) {
+        GLchar messages[256];
+        glGetProgramInfoLog(program, sizeof(messages), 0, &messages[0]);
+        NSString *messageStr = [NSString stringWithUTF8String:messages];
+        NSAssert(NO, @"program链接失败：%@", messageStr);
+        exit(1);
+    }
+    
+    return program;
+}
+
+//编译shader代码
+- (GLuint)compileShaderWithName:(NSString *)name type:(GLenum)shaderType {
+    // 获取shader路径
+    NSString * shaderPath = [[NSBundle mainBundle] pathForResource:name ofType:shaderType == GL_VERTEX_SHADER ? @"vsh" : @"fsh"];
+    
+    NSError * error;
+    
+    NSString * shaderString = [NSString stringWithContentsOfFile:shaderPath encoding:NSUTF8StringEncoding error:&error];
+    if (!shaderString) {
+        NSAssert(NO, @"读取shader失败");
+        exit(1);
+    }
+    
+    //根据类型创建shader
+    GLuint shader = glCreateShader(shaderType);
+    
+    //获取shader source
+    const char * shaderStringUTF8 = [shaderString UTF8String];
+    int shaderStringLength = (int)[shaderString length];
+    glShaderSource(shader, 1, &shaderStringUTF8, &shaderStringLength);
+    
+    //编译shader
+    glCompileShader(shader);
+    
+    //查看编译是否成功
+    GLint complileSuccess;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &complileSuccess);
+    if (complileSuccess == GL_FALSE) {
+        GLchar message[256];
+        glGetShaderInfoLog(shader, sizeof(message), 0, &message[0]);
+        NSString * messageStr = [NSString stringWithUTF8String:message];
+        NSAssert(NO, @"shader编译失败：%@", messageStr);
+        exit(1);
+    }
+    
+    //返回shader
+    return shader;
+}
+
+#pragma mark -- 滤镜动画
+// 开始一个滤镜动画
+- (void)startFilerAnimation {
+    //1.判断displayLink 是否为空
+    //CADisplayLink 定时器
+    if (self.displayLink) {
+        [self.displayLink invalidate];
+        self.displayLink = nil;
+    }
+    //2. 设置displayLink 的方法
+    self.startTimeInterval = 0;
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(timeAction)];
+    
+    //3.将displayLink 添加到runloop 运行循环
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop]
+                           forMode:NSRunLoopCommonModes];
+}
+
+//动画
+- (void)timeAction {
+    //DisplayLink 的当前时间撮
+    if (self.startTimeInterval == 0) {
+        self.startTimeInterval = self.displayLink.timestamp;
+    }
+    //使用program
+    glUseProgram(self.program);
+    //绑定buffer
+    glBindBuffer(GL_ARRAY_BUFFER, self.vertextBuffer);
+    
+    // 传入时间
+    CGFloat currentTime = self.displayLink.timestamp - self.startTimeInterval;
+    GLuint time = glGetUniformLocation(self.program, "Time");
+    glUniform1f(time, currentTime);
+    
+    // 清除画布
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(1, 1, 1, 1);
+    
+    // 重绘
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    //渲染到屏幕上
+    [self.context presentRenderbuffer:GL_RENDERBUFFER];
+}
+
+
+#pragma mark -- 着色器切换
+// 默认着色器程序
+- (void)setupNormalShaderProgram {
+    //设置着色器程序
+    [self setupShaderProgramWithName:@"Normal"];
+}
+
+// 分屏(2屏)
+- (void)setupSplitScreen_2ShaderProgram {
+    [self setupShaderProgramWithName:@"SplitScreen_2"];
+}
+
+// 分屏(3屏)
+- (void)setupSplitScreen_3ShaderProgram {
+    [self setupShaderProgramWithName:@"SplitScreen_3"];
+}
+
+// 分屏(4屏)
+- (void)setupSplitScreen_4ShaderProgram {
+    [self setupShaderProgramWithName:@"SplitScreen_4"];
+}
 
 
 #pragma mark — FilterBar
 - (void)setUpFilterBar{
     FilterBar * filterBar = [[FilterBar alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, FILTERBARHEIGHT)];
     filterBar.delegate = self;
-    filterBar.itemList = _dataSource;
+    
     [self.view addSubview:filterBar];
     [filterBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.height.equalTo(@(FILTERBARHEIGHT));
         make.bottom.equalTo(self.view).with.offset(-BOTTOM_SAFE_HEIGHT);
     }];
-    
+    filterBar.itemList = _dataSource;
 }
-#pragma mark — FilterBarDelegate
 
+#pragma mark - FilterBarDelegate
+
+- (void)filterBar:(FilterBar *)filterBar didScrollToIndex:(NSUInteger)index {
+    //1. 选择默认shader
+    if (index == 0) {
+        [self setupNormalShaderProgram];
+    }else if(index == 1)
+    {
+        [self setupSplitScreen_2ShaderProgram];
+    }else if(index == 2)
+    {
+        [self setupSplitScreen_3ShaderProgram];
+    }else if(index == 3)
+    {
+        [self setupSplitScreen_4ShaderProgram];
+    }
+    // 重新开始滤镜动画
+    [self startFilerAnimation];
+}
 
 
 //获取渲染缓存区的宽

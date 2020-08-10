@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		75BC7D0D24E025050054D3DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D0C24E025050054D3DC /* main.m */; };
 		75BC7D1824E0258C0054D3DC /* FilterBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D1424E0258C0054D3DC /* FilterBarCell.m */; };
 		75BC7D1924E0258C0054D3DC /* FilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BC7D1524E0258C0054D3DC /* FilterBar.m */; };
+		792EF89F24E14F690092967D /* Normal.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 792EF89E24E14F690092967D /* Normal.vsh */; };
+		792EF8A124E14F9D0092967D /* Normal.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 792EF8A024E14F9D0092967D /* Normal.fsh */; };
 		C727818D28FF6A00C6D30CA7 /* Pods_FilterOfSplitScreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA9B6CED50FC09EEB6CCDEB /* Pods_FilterOfSplitScreen.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +38,8 @@
 		75BC7D1524E0258C0054D3DC /* FilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBar.m; sourceTree = "<group>"; };
 		75BC7D1624E0258C0054D3DC /* FilterBarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBarCell.h; sourceTree = "<group>"; };
 		75BC7D1724E0258C0054D3DC /* FilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBar.h; sourceTree = "<group>"; };
+		792EF89E24E14F690092967D /* Normal.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.vsh; sourceTree = "<group>"; };
+		792EF8A024E14F9D0092967D /* Normal.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.fsh; sourceTree = "<group>"; };
 		96D766E7AB31B347F7E5AA19 /* Pods-FilterOfSplitScreen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilterOfSplitScreen.release.xcconfig"; path = "Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen.release.xcconfig"; sourceTree = "<group>"; };
 		E4421F53E3DEB68DC49C1604 /* Pods-FilterOfSplitScreen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilterOfSplitScreen.debug.xcconfig"; path = "Target Support Files/Pods-FilterOfSplitScreen/Pods-FilterOfSplitScreen.debug.xcconfig"; sourceTree = "<group>"; };
 		EFA9B6CED50FC09EEB6CCDEB /* Pods_FilterOfSplitScreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FilterOfSplitScreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,7 +63,6 @@
 				E4421F53E3DEB68DC49C1604 /* Pods-FilterOfSplitScreen.debug.xcconfig */,
 				96D766E7AB31B347F7E5AA19 /* Pods-FilterOfSplitScreen.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -84,6 +87,7 @@
 		75BC7CF924E025000054D3DC /* FilterOfSplitScreen */ = {
 			isa = PBXGroup;
 			children = (
+				792EF89C24E14EC70092967D /* Filter */,
 				75BC7D1324E0258C0054D3DC /* Tool */,
 				75BC7CFA24E025000054D3DC /* AppDelegate.h */,
 				75BC7CFB24E025000054D3DC /* AppDelegate.m */,
@@ -109,6 +113,23 @@
 				75BC7D1724E0258C0054D3DC /* FilterBar.h */,
 			);
 			path = Tool;
+			sourceTree = "<group>";
+		};
+		792EF89C24E14EC70092967D /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				792EF89D24E14F3E0092967D /* Normal */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		792EF89D24E14F3E0092967D /* Normal */ = {
+			isa = PBXGroup;
+			children = (
+				792EF89E24E14F690092967D /* Normal.vsh */,
+				792EF8A024E14F9D0092967D /* Normal.fsh */,
+			);
+			path = Normal;
 			sourceTree = "<group>";
 		};
 		CCDA5B2927381BD531CBAF51 /* Frameworks */ = {
@@ -178,8 +199,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				792EF8A124E14F9D0092967D /* Normal.fsh in Resources */,
 				75BC7D0A24E025050054D3DC /* LaunchScreen.storyboard in Resources */,
 				75BC7D0724E025050054D3DC /* Assets.xcassets in Resources */,
+				792EF89F24E14F690092967D /* Normal.vsh in Resources */,
 				75BC7D0524E025010054D3DC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
